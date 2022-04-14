@@ -42,8 +42,18 @@
   }
   document.addEventListener("keydown", resetEraser);
 
+  // async function getWordList() {
+  //   var url = "https://raw.githubusercontent.com/mazyvan/most-common-spanish-words/master/most-common-spanish-words-v4.txt";
+  //   var response = await fetch(url);
+  //   var text = await response.text();
+  //   var words = text.split("\n");
+  //   return words;
+  // }
+
+  var words = ["abrelatas", "afortunado", "aire", "alto", "amable", "amarillo", "anaranjado", "angosto", "animal", "anormal", "antiguo", "aquel", "argentina", "asiento", "átomo", "azul", "bajísimo", "bajo", "batería", "blanco", "blando", "botón", "brasil", "brillante", "bruto", "buena", "bueno", "cable", "calculadora", "carpeta", "cartera", "casco", "celular", "cerradura", "césped", "chile", "chileno", "cinco", "círculo", "ciruela", "ciudad", "claridad", "clavel", "competencia", "complejo", "complicado", "computadora", "conocido", "cuaderno", "cualquier", "cuarto", "cuerda", "desafortunado", "desconocido", "deshonesto", "deteriorado", "diez", "difícil", "diligente", "dinamarca", "directo", "disposición", "dos", "duro", "ejemplos", "enorme", "escuela", "esfera", "esquina", "estupendo", "extremo", "fácil", "famoso", "flexible", "francia", "galleta", "generosos", "grande", "gris", "guitarra", "hoja", "honesto", "idea", "incómodas", "increíble", "indirecto", "inepto", "inexpresiva", "infeliz", "inobjetable", "inoperante", "insatisfecho", "inteligente", "juguete", "libros", "loros", "magnífico", "mala", "malo", "manantial", "marginado", "mausoleo", "mayor", "mesa", "méxico", "molécula", "mouse", "mueble", "negro", "notas", "nueve", "obsecuente", "ocho", "paciente", "pantalla", "parís", "parlante", "pasto", "pelusa", "pequeño", "periférico", "perro", "piscinas", "planta", "popular", "posavasos", "primer", "programa", "puerta", "querido", "química", "quinto", "rectángulo", "redonda", "rígido", "rojo", "ropa", "segundo", "seis", "sencillo", "séptimo", "sexto", "siete", "silla", "simple", "sincero", "soberbio", "sonido", "suciedad", "sustancia", "teléfono", "televisor", "tercero", "tierra", "tigre", "trabajador", "trabajo", "tres", "triángulo", "tu", "tulipán", "utensilio", "vaso", "ventana", "verde", "vidrio", "violeta", "violín", "visita", ];
   function randomWord() {
-    return "hola";
+    var i = Math.floor(Math.random() * words.length);
+    return words[i];
   }
   document.getElementById("randw").innerHTML = randomWord();
 </script>
