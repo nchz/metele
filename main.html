@@ -7,7 +7,7 @@
     .column {
       float: left;
       padding: 5vw 5vw;
-      height: 100vh;
+      height: 90vh;
     }
 
     .randw {
@@ -25,10 +25,10 @@
 <body>
   <h2>Metele que son pastele</h2>
   <div class="column randw">
-    <p>random word</p>
+    <p id="randw" />
   </div>
   <div class="column text">
-    <input id="textinput" type="text" style="width:65vw;" />
+    <textarea id="textinput" style="height:75vh;width:65vw;"></textarea>
   </div>
 </body>
 
@@ -41,4 +41,9 @@
     eraserId = buildEraser();
   }
   document.addEventListener("keydown", resetEraser);
+
+  function randomWord() {
+    return "hola";
+  }
+  document.getElementById("randw").innerHTML = randomWord();
 </script>
