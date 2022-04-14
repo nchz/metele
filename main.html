@@ -1,0 +1,11 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script>
+  var buildEraser = () => setInterval(() => $("#inp").val(""), 1000);
+  var eraserId = buildEraser();
+  function resetEraser(e) {
+    clearInterval(eraserId);
+    eraserId = buildEraser();
+  }
+  document.addEventListener("keydown", resetEraser);
+</script>
+<input id="inp" type="text" style="width:100vw;" />
