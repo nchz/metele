@@ -1,6 +1,40 @@
+<head>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    .column {
+      float: left;
+      padding: 5vw 5vw;
+      height: 100vh;
+    }
+
+    .randw {
+      width: 25%;
+      background-color: #aaa;
+    }
+
+    .text {
+      width: 75%;
+      background-color: #bbb;
+    }
+  </style>
+</head>
+
+<body>
+  <h2>Metele que son pastele</h2>
+  <div class="column randw">
+    <p>random word</p>
+  </div>
+  <div class="column text">
+    <input id="textinput" type="text" style="width:65vw;" />
+  </div>
+</body>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script>
-  var buildEraser = () => setInterval(() => $("#inp").val(""), 1000);
+  var buildEraser = () => setInterval(() => $("#textinput").val(""), 1000);
   var eraserId = buildEraser();
   function resetEraser(e) {
     clearInterval(eraserId);
@@ -8,4 +42,3 @@
   }
   document.addEventListener("keydown", resetEraser);
 </script>
-<input id="inp" type="text" style="width:100vw;" />
