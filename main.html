@@ -25,7 +25,8 @@
 <body>
   <h2>Metele que son pastele</h2>
   <div class="column randw">
-    <p id="randw" />
+    <p id="randw" style="background: #fff" />
+    <p id="prevw" />
   </div>
   <div class="column text">
     <textarea id="textinput" style="height:75vh;width:65vw;"></textarea>
@@ -34,11 +35,24 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script>
-  var buildEraser = () => setInterval(() => $("#textinput").val(""), 1000);
+  var buildEraser = () => setInterval(() => $("#textinput").val(""), 10000);
   var eraserId = buildEraser();
   function resetEraser(e) {
-    clearInterval(eraserId);
-    eraserId = buildEraser();
+    if (e.keyCode == 32) {
+      clearInterval(eraserId);
+      eraserId = buildEraser();
+      // check if target word was used.
+      var ws = $("#textinput").val().split(" ");
+      console.log(ws.length)
+      var lw = ws[ws.length - 1];
+      var tw = document.getElementById("randw").innerHTML;
+      console.log(lw, tw)
+      if (lw === tw) {
+        console.log("ENTERED")
+        document.getElementById("randw").innerHTML = getRandomWord();
+        document.getElementById("prevw").innerHTML += tw + "<br>";
+      }
+    }
   }
   document.addEventListener("keydown", resetEraser);
 
@@ -49,11 +63,12 @@
   //   var words = text.split("\n");
   //   return words;
   // }
+  // var words = await getWordList();
 
-  var words = ["abrelatas", "afortunado", "aire", "alto", "amable", "amarillo", "anaranjado", "angosto", "animal", "anormal", "antiguo", "aquel", "argentina", "asiento", "átomo", "azul", "bajísimo", "bajo", "batería", "blanco", "blando", "botón", "brasil", "brillante", "bruto", "buena", "bueno", "cable", "calculadora", "carpeta", "cartera", "casco", "celular", "cerradura", "césped", "chile", "chileno", "cinco", "círculo", "ciruela", "ciudad", "claridad", "clavel", "competencia", "complejo", "complicado", "computadora", "conocido", "cuaderno", "cualquier", "cuarto", "cuerda", "desafortunado", "desconocido", "deshonesto", "deteriorado", "diez", "difícil", "diligente", "dinamarca", "directo", "disposición", "dos", "duro", "ejemplos", "enorme", "escuela", "esfera", "esquina", "estupendo", "extremo", "fácil", "famoso", "flexible", "francia", "galleta", "generosos", "grande", "gris", "guitarra", "hoja", "honesto", "idea", "incómodas", "increíble", "indirecto", "inepto", "inexpresiva", "infeliz", "inobjetable", "inoperante", "insatisfecho", "inteligente", "juguete", "libros", "loros", "magnífico", "mala", "malo", "manantial", "marginado", "mausoleo", "mayor", "mesa", "méxico", "molécula", "mouse", "mueble", "negro", "notas", "nueve", "obsecuente", "ocho", "paciente", "pantalla", "parís", "parlante", "pasto", "pelusa", "pequeño", "periférico", "perro", "piscinas", "planta", "popular", "posavasos", "primer", "programa", "puerta", "querido", "química", "quinto", "rectángulo", "redonda", "rígido", "rojo", "ropa", "segundo", "seis", "sencillo", "séptimo", "sexto", "siete", "silla", "simple", "sincero", "soberbio", "sonido", "suciedad", "sustancia", "teléfono", "televisor", "tercero", "tierra", "tigre", "trabajador", "trabajo", "tres", "triángulo", "tu", "tulipán", "utensilio", "vaso", "ventana", "verde", "vidrio", "violeta", "violín", "visita", ];
-  function randomWord() {
+  var words = ["abrelatas", "afortunado", "aire", "alto", "amable", "amarillo", "anaranjado", "angosto", "animal", "anormal", "antiguo", "aquel", "argentina", "asiento", "atomo", "azul", "bajisimo", "bajo", "bateria", "blanco", "blando", "boton", "brasil", "brillante", "bruto", "buena", "bueno", "cable", "calculadora", "carpeta", "cartera", "casco", "celular", "cerradura", "cesped", "chile", "chileno", "cinco", "circulo", "ciruela", "ciudad", "claridad", "clavel", "competencia", "complejo", "complicado", "computadora", "conocido", "cuaderno", "cualquier", "cuarto", "cuerda", "desafortunado", "desconocido", "deshonesto", "deteriorado", "diez", "dificil", "diligente", "dinamarca", "directo", "disposicion", "dos", "duro", "ejemplos", "enorme", "escuela", "esfera", "esquina", "estupendo", "extremo", "facil", "famoso", "flexible", "francia", "galleta", "generosos", "grande", "gris", "guitarra", "hoja", "honesto", "idea", "incomodas", "increible", "indirecto", "inepto", "inexpresiva", "infeliz", "inobjetable", "inoperante", "insatisfecho", "inteligente", "juguete", "libros", "loros", "magnifico", "mala", "malo", "manantial", "marginado", "mausoleo", "mayor", "mesa", "mexico", "molecula", "mouse", "mueble", "negro", "notas", "nueve", "obsecuente", "ocho", "paciente", "pantalla", "paris", "parlante", "pasto", "pelusa", "pequeno", "periferico", "perro", "piscinas", "planta", "popular", "posavasos", "primer", "programa", "puerta", "querido", "quimica", "quinto", "rectangulo", "redonda", "rigido", "rojo", "ropa", "segundo", "seis", "sencillo", "septimo", "sexto", "siete", "silla", "simple", "sincero", "soberbio", "sonido", "suciedad", "sustancia", "telefono", "televisor", "tercero", "tierra", "tigre", "trabajador", "trabajo", "tres", "triangulo", "tu", "tulipan", "utensilio", "vaso", "ventana", "verde", "vidrio", "violeta", "violin", "visita"];
+  function getRandomWord() {
     var i = Math.floor(Math.random() * words.length);
     return words[i];
   }
-  document.getElementById("randw").innerHTML = randomWord();
+  document.getElementById("randw").innerHTML = getRandomWord();
 </script>
