@@ -35,39 +35,45 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script>
-  var buildEraser = () => setInterval(() => $("#textinput").val(""), 10000);
-  var eraserId = buildEraser();
-  function resetEraser(e) {
+  function timeout() {
+    // delete text.
+    // $("#textinput").val("");
+    // make it readonly.
+    const ti = document.getElementById("textinput");
+    ti.setAttribute("readonly", "true");
+    ti.setAttribute("style", ti.getAttribute("style") + "background: transparent;");
+  }
+  const buildTimer = () => setInterval(timeout, 5000);
+  var timerId = buildTimer();
+  function resetTimer(e) {
     if (e.keyCode == 32) {
-      clearInterval(eraserId);
-      eraserId = buildEraser();
+      clearInterval(timerId);
+      timerId = buildTimer();
       // check if target word was used.
-      var ws = $("#textinput").val().split(" ");
-      console.log(ws.length)
-      var lw = ws[ws.length - 1];
-      var tw = document.getElementById("randw").innerHTML;
-      console.log(lw, tw)
+      const ws = $("#textinput").val().split(" ");
+      const lw = ws[ws.length - 1];
+      const tw = document.getElementById("randw").innerHTML;
       if (lw === tw) {
-        console.log("ENTERED")
         document.getElementById("randw").innerHTML = getRandomWord();
-        document.getElementById("prevw").innerHTML += tw + "<br>";
+        const prevw = document.getElementById("prevw")
+        prevw.innerHTML = tw + "<br>" + prevw.innerHTML;
       }
     }
   }
-  document.addEventListener("keydown", resetEraser);
+  document.addEventListener("keydown", resetTimer);
 
   // async function getWordList() {
-  //   var url = "https://raw.githubusercontent.com/mazyvan/most-common-spanish-words/master/most-common-spanish-words-v4.txt";
-  //   var response = await fetch(url);
-  //   var text = await response.text();
-  //   var words = text.split("\n");
+  //   const url = "https://raw.githubusercontent.com/mazyvan/most-common-spanish-words/master/most-common-spanish-words-v4.txt";
+  //   const response = await fetch(url);
+  //   const text = await response.text();
+  //   const words = text.split("\n");
   //   return words;
   // }
-  // var words = await getWordList();
+  // const words = await getWordList();
 
-  var words = ["abrelatas", "afortunado", "aire", "alto", "amable", "amarillo", "anaranjado", "angosto", "animal", "anormal", "antiguo", "aquel", "argentina", "asiento", "atomo", "azul", "bajisimo", "bajo", "bateria", "blanco", "blando", "boton", "brasil", "brillante", "bruto", "buena", "bueno", "cable", "calculadora", "carpeta", "cartera", "casco", "celular", "cerradura", "cesped", "chile", "chileno", "cinco", "circulo", "ciruela", "ciudad", "claridad", "clavel", "competencia", "complejo", "complicado", "computadora", "conocido", "cuaderno", "cualquier", "cuarto", "cuerda", "desafortunado", "desconocido", "deshonesto", "deteriorado", "diez", "dificil", "diligente", "dinamarca", "directo", "disposicion", "dos", "duro", "ejemplos", "enorme", "escuela", "esfera", "esquina", "estupendo", "extremo", "facil", "famoso", "flexible", "francia", "galleta", "generosos", "grande", "gris", "guitarra", "hoja", "honesto", "idea", "incomodas", "increible", "indirecto", "inepto", "inexpresiva", "infeliz", "inobjetable", "inoperante", "insatisfecho", "inteligente", "juguete", "libros", "loros", "magnifico", "mala", "malo", "manantial", "marginado", "mausoleo", "mayor", "mesa", "mexico", "molecula", "mouse", "mueble", "negro", "notas", "nueve", "obsecuente", "ocho", "paciente", "pantalla", "paris", "parlante", "pasto", "pelusa", "pequeno", "periferico", "perro", "piscinas", "planta", "popular", "posavasos", "primer", "programa", "puerta", "querido", "quimica", "quinto", "rectangulo", "redonda", "rigido", "rojo", "ropa", "segundo", "seis", "sencillo", "septimo", "sexto", "siete", "silla", "simple", "sincero", "soberbio", "sonido", "suciedad", "sustancia", "telefono", "televisor", "tercero", "tierra", "tigre", "trabajador", "trabajo", "tres", "triangulo", "tu", "tulipan", "utensilio", "vaso", "ventana", "verde", "vidrio", "violeta", "violin", "visita"];
+  const words = ["abrelatas", "afortunado", "aire", "alto", "amable", "amarillo", "anaranjado", "angosto", "animal", "anormal", "antiguo", "aquel", "argentina", "asiento", "atomo", "azul", "bajisimo", "bajo", "bateria", "blanco", "blando", "boton", "brasil", "brillante", "bruto", "buena", "bueno", "cable", "calculadora", "carpeta", "cartera", "casco", "celular", "cerradura", "cesped", "chile", "chileno", "cinco", "circulo", "ciruela", "ciudad", "claridad", "clavel", "competencia", "complejo", "complicado", "computadora", "conocido", "cuaderno", "cualquier", "cuarto", "cuerda", "desafortunado", "desconocido", "deshonesto", "deteriorado", "diez", "dificil", "diligente", "dinamarca", "directo", "disposicion", "dos", "duro", "ejemplos", "enorme", "escuela", "esfera", "esquina", "estupendo", "extremo", "facil", "famoso", "flexible", "francia", "galleta", "generosos", "grande", "gris", "guitarra", "hoja", "honesto", "idea", "incomodas", "increible", "indirecto", "inepto", "inexpresiva", "infeliz", "inobjetable", "inoperante", "insatisfecho", "inteligente", "juguete", "libros", "loros", "magnifico", "mala", "malo", "manantial", "marginado", "mausoleo", "mayor", "mesa", "mexico", "molecula", "mouse", "mueble", "negro", "notas", "nueve", "obsecuente", "ocho", "paciente", "pantalla", "paris", "parlante", "pasto", "pelusa", "pequeno", "periferico", "perro", "piscinas", "planta", "popular", "posavasos", "primer", "programa", "puerta", "querido", "quimica", "quinto", "rectangulo", "redonda", "rigido", "rojo", "ropa", "segundo", "seis", "sencillo", "septimo", "sexto", "siete", "silla", "simple", "sincero", "soberbio", "sonido", "suciedad", "sustancia", "telefono", "televisor", "tercero", "tierra", "tigre", "trabajador", "trabajo", "tres", "triangulo", "tu", "tulipan", "utensilio", "vaso", "ventana", "verde", "vidrio", "violeta", "violin", "visita"];
   function getRandomWord() {
-    var i = Math.floor(Math.random() * words.length);
+    const i = Math.floor(Math.random() * words.length);
     return words[i];
   }
   document.getElementById("randw").innerHTML = getRandomWord();
