@@ -50,10 +50,10 @@
       clearInterval(timerId);
       timerId = buildTimer();
       // check if target word was used.
-      const ws = $("#textinput").val().split(" ");
-      const lw = ws[ws.length - 1].replace(/[\.,;]/, "").trim();
+      const ws = $("#textinput").val().trim().split(/\s+/)
+      const lw = ws[ws.length - 1].replace(/[\.,;]/, "");
       const tw = document.getElementById("randw").innerHTML;
-      if (lw === tw) {
+      if (lw.toLowerCase() === tw.toLowerCase()) {
         document.getElementById("randw").innerHTML = getRandomWord();
         const prevw = document.getElementById("prevw")
         prevw.innerHTML = tw + "<br>" + prevw.innerHTML;
