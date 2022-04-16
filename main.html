@@ -24,17 +24,25 @@
 
 <body>
   <h2>Metele que son pastele</h2>
+  <div>
+    <input id="timeoutSeconds" type="number" value="5" style="width: 50px; text-align: right" /> segundos para pensar
+    <button onclick="reset()" style="float: right;">Reiniciar</button>
+  </div>
   <div class="column randw">
     <p id="randw" style="background: #fff" />
     <p id="prevw" />
   </div>
   <div class="column text">
-    <textarea id="textinput" style="height:75vh;width:65vw;"></textarea>
+    <textarea id="textinput" style="height: 75vh; width: 65vw;"></textarea>
   </div>
 </body>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script>
+  function reset() {
+    alert("hola")
+  }
+
   function timeout() {
     // delete text.
     // $("#textinput").val("");
@@ -43,7 +51,7 @@
     ti.setAttribute("readonly", "true");
     ti.setAttribute("style", ti.getAttribute("style") + "background: transparent;");
   }
-  const buildTimer = () => setInterval(timeout, 15000);
+  const buildTimer = () => setInterval(timeout, 1000 * Number($("#timeoutSeconds").val()));
   var timerId = buildTimer();
   function resetTimer(e) {
     if (e.keyCode == 13 || e.keyCode == 32) {
@@ -62,6 +70,7 @@
   }
   document.addEventListener("keydown", resetTimer);
 
+  // get words from a repo.
   // async function getWordList() {
   //   const url = "https://raw.githubusercontent.com/mazyvan/most-common-spanish-words/master/most-common-spanish-words-v4.txt";
   //   const response = await fetch(url);
