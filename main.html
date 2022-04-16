@@ -26,7 +26,7 @@
   <h2>Metele que son pastele</h2>
   <div>
     <input id="timeoutSeconds" type="number" value="5" style="width: 50px; text-align: right" /> segundos para pensar
-    <button onclick="reset()" style="float: right;">Reiniciar</button>
+    <button onclick="resetGame()" style="float: right;">Reiniciar</button>
   </div>
   <div class="column randw">
     <p id="randw" style="background: #fff" />
@@ -39,42 +39,59 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script>
-  function reset() {
-    clearInterval(timerId);
-    const ti = document.getElementById("textinput");
-    ti.removeAttribute("readonly");
-    ti.setAttribute("style", "height: 75vh; width: 65vw;");
+  // string handling module.
+  function removeSpecialChars(str) {
+    return str.replace(/[\.,;\-¡¿\?\!]/, "");
   }
-
-  const buildTimer = () => setInterval(timeout, 1000 * Number($("#timeoutSeconds").val()));
-  var timerId;
-  function timeout() {
-    // delete text.
-    // $("#textinput").val("");
-    // make it readonly.
-    const ti = document.getElementById("textinput");
-    ti.setAttribute("readonly", "true");
-    ti.setAttribute("style", "height: 75vh; width: 65vw; background: transparent;");
-  }
-  function resetTimer(e) {
-    if (e.keyCode == 13 || e.keyCode == 32) {
-      clearInterval(timerId);
-      timerId = buildTimer();
-      // check if target word was used.
-      const ws = $("#textinput").val().trim().split(/\s+/)
-      const lw = ws[ws.length - 1].replace(/[\.,;]/, "");
-      const tw = document.getElementById("randw").innerHTML;
-      if (normString(lw) === normString(tw)) {
-        document.getElementById("randw").innerHTML = getRandomWord();
-        const prevw = document.getElementById("prevw")
-        prevw.innerHTML = tw + "<br>" + prevw.innerHTML;
-      }
-    }
+  function removeAccents(str) {
+    return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
   }
   function normString(str) {
-    return str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    var r = str.toLowerCase();
+    r = removeSpecialChars(r);
+    r = removeAccents(r);
+    return r
   }
-  document.addEventListener("keydown", resetTimer);
+</script>
+<script>
+  // main module.
+  var timerId;
+  function buildTimer() {
+    const seconds = Number($("#timeoutSeconds").val());
+    return setInterval(makeTextReadonly, 1000 * seconds);
+  }
+  function resetTimer() {
+    clearInterval(timerId);
+    timerId = buildTimer();
+  }
+  // functions for timeout.
+  function deleteText() {
+    $("#textinput").val("");
+  }
+  function makeTextReadonly() {
+    const textinput = document.getElementById("textinput");
+    textinput.setAttribute("readonly", "true");
+    textinput.setAttribute("style", "height: 75vh; width: 65vw; background: transparent;");
+  }
+
+  document.addEventListener("keydown", processWord);
+  function processWord(e) {
+    if (e.keyCode == 13 || e.keyCode == 32) {
+      resetTimer();
+      checkTargetWord();
+    }
+  }
+  function checkTargetWord(e) {
+    // check if target word was used.
+    const inputWords = $("#textinput").val().trim().split(/\s+/);
+    const lastWord = inputWords[inputWords.length - 1];
+    const targetWord = document.getElementById("randw").innerHTML;
+    if (normString(lastWord) === normString(targetWord)) {
+      document.getElementById("randw").innerHTML = getRandomWord();
+      const prevw = document.getElementById("prevw")
+      prevw.innerHTML = targetWord + "<br>" + prevw.innerHTML;
+    }
+  }
 
   var words;
   const url = "https://raw.githubusercontent.com/mazyvan/most-common-spanish-words/master/most-common-spanish-words-v4.txt";
@@ -85,7 +102,8 @@
       if (r.readyState === 4) {
         if (r.status === 200 || r.status == 0) {
           const text = r.responseText;
-          words = text.split("\n");
+          words = text.split("\n").filter(w => w.length > 3);
+          // alert(words.length)
         }
       }
     }
@@ -97,4 +115,11 @@
     return words[i];
   }
   document.getElementById("randw").innerHTML = getRandomWord();
+
+  function resetGame() {
+    clearInterval(timerId);
+    const textinput = document.getElementById("textinput");
+    textinput.removeAttribute("readonly");
+    textinput.setAttribute("style", "height: 75vh; width: 65vw;");
+  }
 </script>
