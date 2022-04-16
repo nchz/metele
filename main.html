@@ -40,17 +40,29 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script>
   // string handling module.
-  function removeSpecialChars(str) {
+  function removePunctChars(str) {
     return str.replace(/[\.,;\-¡¿\?\!]/, "");
   }
   function removeAccents(str) {
-    return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    // return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    return str.replace("á", "a").replace("Á", "A")
+      .replace("é", "e").replace("É", "E")
+      .replace("í", "i").replace("Í", "I")
+      .replace("ó", "o").replace("Ó", "O")
+      .replace("ú", "u").replace("Ú", "U")
+      .replace("ü", "u");
   }
   function normString(str) {
-    var r = str.toLowerCase();
-    r = removeSpecialChars(r);
+    var r = str.trim().toLowerCase();
+    r = removePunctChars(r);
     r = removeAccents(r);
     return r
+  }
+  function isWord(str) {
+    // check if `str` are just characters.
+    var r = str.trim().toLowerCase();
+    r = removeAccents(r);
+    return [...r].map(c => "abcdefghijklmnopqrstuvwxyz".includes(c)).every(t => t);
   }
 </script>
 <script>
@@ -102,8 +114,8 @@
       if (r.readyState === 4) {
         if (r.status === 200 || r.status == 0) {
           const text = r.responseText;
-          words = text.split("\n").filter(w => w.length > 3);
-          // alert(words.length)
+          words = text.split("\n").map(w => removePunctChars(w.trim())).filter(w => w.length > 3 && isWord(w));
+          console.log(`Using ${words.length} words.`)
         }
       }
     }
