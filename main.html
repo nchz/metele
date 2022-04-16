@@ -76,17 +76,22 @@
   }
   document.addEventListener("keydown", resetTimer);
 
-  // get words from a repo.
-  // async function getWordList() {
-  //   const url = "https://raw.githubusercontent.com/mazyvan/most-common-spanish-words/master/most-common-spanish-words-v4.txt";
-  //   const response = await fetch(url);
-  //   const text = await response.text();
-  //   const words = text.split("\n");
-  //   return words;
-  // }
-  // const words = await getWordList();
-
-  const words = ["abrelatas", "afortunado", "aire", "alto", "amable", "amarillo", "anaranjado", "angosto", "animal", "anormal", "antiguo", "aquel", "argentina", "asiento", "atomo", "azul", "bajisimo", "bajo", "bateria", "blanco", "blando", "boton", "brasil", "brillante", "bruto", "buena", "bueno", "cable", "calculadora", "carpeta", "cartera", "casco", "celular", "cerradura", "cesped", "chile", "chileno", "cinco", "circulo", "ciruela", "ciudad", "claridad", "clavel", "competencia", "complejo", "complicado", "computadora", "conocido", "cuaderno", "cualquier", "cuarto", "cuerda", "desafortunado", "desconocido", "deshonesto", "deteriorado", "diez", "dificil", "diligente", "dinamarca", "directo", "disposicion", "dos", "duro", "ejemplos", "enorme", "escuela", "esfera", "esquina", "estupendo", "extremo", "facil", "famoso", "flexible", "francia", "galleta", "generosos", "grande", "gris", "guitarra", "hoja", "honesto", "idea", "incomodas", "increible", "indirecto", "inepto", "inexpresiva", "infeliz", "inobjetable", "inoperante", "insatisfecho", "inteligente", "juguete", "libros", "loros", "magnifico", "mala", "malo", "manantial", "marginado", "mausoleo", "mayor", "mesa", "mexico", "molecula", "mouse", "mueble", "negro", "notas", "nueve", "obsecuente", "ocho", "paciente", "pantalla", "paris", "parlante", "pasto", "pelusa", "pequeno", "periferico", "perro", "piscinas", "planta", "popular", "posavasos", "primer", "programa", "puerta", "querido", "quimica", "quinto", "rectangulo", "redonda", "rigido", "rojo", "ropa", "segundo", "seis", "sencillo", "septimo", "sexto", "siete", "silla", "simple", "sincero", "soberbio", "sonido", "suciedad", "sustancia", "telefono", "televisor", "tercero", "tierra", "tigre", "trabajador", "trabajo", "tres", "triangulo", "tu", "tulipan", "utensilio", "vaso", "ventana", "verde", "vidrio", "violeta", "violin", "visita"];
+  var words;
+  const url = "https://raw.githubusercontent.com/mazyvan/most-common-spanish-words/master/most-common-spanish-words-v4.txt";
+  function getWordList() {
+    var r = new XMLHttpRequest();
+    r.open("GET", url, false);
+    r.onreadystatechange = function () {
+      if (r.readyState === 4) {
+        if (r.status === 200 || r.status == 0) {
+          const text = r.responseText;
+          words = text.split("\n");
+        }
+      }
+    }
+    r.send(null);
+  }
+  getWordList();
   function getRandomWord() {
     const i = Math.floor(Math.random() * words.length);
     return words[i];
