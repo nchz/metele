@@ -40,7 +40,10 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script>
   function reset() {
-    alert("hola")
+    clearInterval(timerId);
+    const ti = document.getElementById("textinput");
+    ti.removeAttribute("readonly");
+    ti.setAttribute("style", "height: 75vh; width: 65vw;");
   }
 
   const buildTimer = () => setInterval(timeout, 1000 * Number($("#timeoutSeconds").val()));
@@ -51,7 +54,7 @@
     // make it readonly.
     const ti = document.getElementById("textinput");
     ti.setAttribute("readonly", "true");
-    ti.setAttribute("style", ti.getAttribute("style") + "background: transparent;");
+    ti.setAttribute("style", "height: 75vh; width: 65vw; background: transparent;");
   }
   function resetTimer(e) {
     if (e.keyCode == 13 || e.keyCode == 32) {
