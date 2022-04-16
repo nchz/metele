@@ -64,12 +64,15 @@
       const ws = $("#textinput").val().trim().split(/\s+/)
       const lw = ws[ws.length - 1].replace(/[\.,;]/, "");
       const tw = document.getElementById("randw").innerHTML;
-      if (lw.toLowerCase() === tw.toLowerCase()) {
+      if (normString(lw) === normString(tw)) {
         document.getElementById("randw").innerHTML = getRandomWord();
         const prevw = document.getElementById("prevw")
         prevw.innerHTML = tw + "<br>" + prevw.innerHTML;
       }
     }
+  }
+  function normString(str) {
+    return str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
   }
   document.addEventListener("keydown", resetTimer);
 
