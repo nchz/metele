@@ -43,6 +43,8 @@
     alert("hola")
   }
 
+  const buildTimer = () => setInterval(timeout, 1000 * Number($("#timeoutSeconds").val()));
+  var timerId;
   function timeout() {
     // delete text.
     // $("#textinput").val("");
@@ -51,8 +53,6 @@
     ti.setAttribute("readonly", "true");
     ti.setAttribute("style", ti.getAttribute("style") + "background: transparent;");
   }
-  const buildTimer = () => setInterval(timeout, 1000 * Number($("#timeoutSeconds").val()));
-  var timerId = buildTimer();
   function resetTimer(e) {
     if (e.keyCode == 13 || e.keyCode == 32) {
       clearInterval(timerId);
