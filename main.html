@@ -25,7 +25,7 @@
 <body>
   <h2>Metele que son pastele</h2>
   <div>
-    <input id="timeoutSeconds" type="number" value="5" style="width: 50px; text-align: right" /> segundos para pensar
+    <input id="timeoutSeconds" type="number" value="10" style="width: 50px; text-align: right" /> segundos para pensar
     <button onclick="resetGame()" style="float: right;">Reiniciar</button>
   </div>
   <div class="column randw">
@@ -37,7 +37,6 @@
   </div>
 </body>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script>
   // string handling module.
   function removePunctChars(str) {
@@ -69,7 +68,7 @@
   // main module.
   var timerId;
   function buildTimer() {
-    const seconds = Number($("#timeoutSeconds").val());
+    const seconds = Number(document.getElementById("timeoutSeconds").value);
     return setInterval(makeTextReadonly, 1000 * seconds);
   }
   function resetTimer() {
@@ -78,7 +77,7 @@
   }
   // functions for timeout.
   function deleteText() {
-    $("#textinput").val("");
+    document.getElementById("textinput").value = "";
   }
   function makeTextReadonly() {
     const textinput = document.getElementById("textinput");
@@ -95,7 +94,7 @@
   }
   function checkTargetWord(e) {
     // check if target word was used.
-    const inputWords = $("#textinput").val().trim().split(/\s+/);
+    const inputWords = document.getElementById("textinput").value.trim().split(/\s+/);
     const lastWord = inputWords[inputWords.length - 1];
     const targetWord = document.getElementById("randw").innerHTML;
     if (normString(lastWord) === normString(targetWord)) {
