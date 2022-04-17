@@ -109,6 +109,7 @@
     <p>
       <input id="timeoutSeconds" type="number" value="10" style="width: 50px; text-align: right" /> segundos para pensar
       <button onclick="resetGame()" style="float: right;">Reiniciar</button>
+      <button onclick="downloadStory()" style="float: right;">Descargar</button>
     </p>
   </div>
   <div class="main">
@@ -126,16 +127,16 @@
 <script>
   // string handling module.
   function removePunctChars(str) {
-    return str.replace(/[\.,;\-¡¿\?\!]/, "");
+    return str.replace(/[\.,;\-¡¿\?\!]/g, "");
   }
   function removeAccents(str) {
     // return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-    return str.replace("á", "a").replace("Á", "A")
-      .replace("é", "e").replace("É", "E")
-      .replace("í", "i").replace("Í", "I")
-      .replace("ó", "o").replace("Ó", "O")
-      .replace("ú", "u").replace("Ú", "U")
-      .replace("ü", "u");
+    return str.replace(/á/g, "a").replace(/Á/g, "A")
+      .replace(/é/g, "e").replace(/É/g, "E")
+      .replace(/í/g, "i").replace(/Í/g, "I")
+      .replace(/ó/g, "o").replace(/Ó/g, "O")
+      .replace(/ú/g, "u").replace(/Ú/g, "U")
+      .replace(/ü/g, "u");
   }
   function normString(str) {
     var r = str.trim().toLowerCase();
@@ -218,6 +219,16 @@
     const storyText = document.getElementById("storyText");
     storyText.removeAttribute("readonly");
     storyText.removeAttribute("style");
+  }
+
+  function downloadStory() {
+    const storyText = document.getElementById("storyText").value;
+    const now = new Date();
+    const downloadLink = document.createElement("a");
+    downloadLink.href = "data:x-application/text," + escape(storyText);
+    downloadLink.download = `${now.toISOString().slice(0, -5)}.txt`;
+    downloadLink.click();
+    downloadLink.remove();
   }
 </script>
 
