@@ -8,39 +8,67 @@
       box-sizing: border-box;
     }
 
-    .column {
-      float: left;
-      padding: 3vw 3vw;
+    .header {
+      position: fixed;
+      left: 0;
+      width: 100vw;
+      top: 0;
+      height: 15vh;
+      background: lightseagreen;
+    }
+
+    .footer {
+      position: fixed;
+      left: 0;
+      width: 100vw;
+      bottom: 0;
+      height: 5vh;
+      background: lightseagreen;
+    }
+
+    .main {
+      position: fixed;
+      left: 0;
+      width: 100vw;
+      top: 15vh;
       height: 80vh;
     }
 
+    .column {
+      float: left;
+      padding: 5% 5%;
+      height: 100%;
+    }
+
+    .story-text {
+      width: 70%;
+      background: lightgray;
+    }
+
+    textarea {
+      height: 100%;
+      width: 100%;
+    }
+
     .random-words {
-      width: 25%;
-      background-color: #aaa;
+      width: 30%;
+      background: lightblue;
     }
 
     .target-word {
-      background: #fff;
+      background: white;
+      text-align: center;
+      line-height: 2;
     }
 
     .prev-words-grid {
       display: grid;
-      grid-template-columns: 11vw 11vw;
-    }
-
-    .story-text {
-      width: 75%;
-      background-color: #bbb;
-    }
-
-    textarea {
-      height: 70vh;
-      width: 68vw;
+      grid-template-columns: 60% 40%;
     }
 
     @media screen and (max-width: 1100px) {
       .prev-words-grid {
-        grid-template-columns: auto;
+        grid-template-columns: 100%;
       }
     }
 
@@ -49,40 +77,49 @@
         width: 100%;
       }
 
+      .story-text {
+        height: 80%;
+      }
+
       .random-words {
-        height: 6vh;
+        height: 20%;
+      }
+
+      .target-word {
+        float: left;
+        width: 30%;
       }
 
       .prev-words-grid {
-        display: none;
-      }
-
-      .story-text {
-        height: 72vh;
-      }
-
-      textarea {
-        height: 68vh;
-        width: 90vw;
+        float: right;
+        width: 65%;
+        grid-template-columns: 50% 50%;
+        max-height: 100%;
+        overflow: hidden;
       }
     }
   </style>
 </head>
 
 <body>
-  <h2>Metele</h2>
-  <p>Para ejercitar la creatividad y la escritura.</p>
-  <p>
-    <input id="timeoutSeconds" type="number" value="10" style="width: 50px; text-align: right" /> segundos para pensar
-    <button onclick="resetGame()" style="float: right;">Reiniciar</button>
-  </p>
-  <div class="column random-words">
-    <div id="targetWord" class="target-word"></div>
-    <div id="prevWords" class="prev-words-grid">
-    </div>
+  <div class="footer">version 0.4.1</div>
+  <div class="header">
+    <h2>Metele</h2>
+    Para ejercitar la creatividad y la escritura.
+    <p>
+      <input id="timeoutSeconds" type="number" value="10" style="width: 50px; text-align: right" /> segundos para pensar
+      <button onclick="resetGame()" style="float: right;">Reiniciar</button>
+    </p>
   </div>
-  <div class="column story-text">
-    <textarea id="storyText"></textarea>
+  <div class="main">
+    <div class="column random-words">
+      <div id="targetWord" class="target-word"></div>
+      <div id="prevWords" class="prev-words-grid">
+      </div>
+    </div>
+    <div class="column story-text">
+      <textarea id="storyText"></textarea>
+    </div>
   </div>
 </body>
 
