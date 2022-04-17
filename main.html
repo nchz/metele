@@ -2,6 +2,7 @@
 <html>
 
 <head>
+  <title>Metele</title>
   <style>
     * {
       box-sizing: border-box;
@@ -10,33 +11,62 @@
     .column {
       float: left;
       padding: 5vw 5vw;
-      height: 90vh;
+      height: 85vh;
     }
 
-    .randw {
+    .random-words {
       width: 25%;
       background-color: #aaa;
     }
 
-    .text {
+    .story-text {
       width: 75%;
       background-color: #bbb;
+    }
+
+    textarea {
+      height: 70vh;
+      width: 65vw;
+    }
+
+    @media screen and (max-width: 600px) {
+      .column {
+        width: 100%;
+      }
+
+      .random-words {
+        height: 12vh;
+      }
+
+      .story-text {
+        height: 72vh;
+      }
+
+      textarea {
+        height: 65vh;
+        width: 85vw;
+      }
+
+      .prev-words {
+        display: none;
+      }
     }
   </style>
 </head>
 
 <body>
-  <h2>Metele que son pastele</h2>
-  <div>
+  <h2>Metele</h2>
+  <p>Para ejercitar la creatividad y la escritura.</p>
+  <p>
     <input id="timeoutSeconds" type="number" value="10" style="width: 50px; text-align: right" /> segundos para pensar
     <button onclick="resetGame()" style="float: right;">Reiniciar</button>
+  </p>
+  <div class="column random-words">
+    <p id="targetWord" style="background: #fff" />
+    <p id="prevWords" class="prev-words" />
   </div>
-  <div class="column randw">
-    <p id="randw" style="background: #fff" />
-    <p id="prevw" />
-  </div>
-  <div class="column text">
-    <textarea id="textinput" style="height: 75vh; width: 65vw;"></textarea>
+  <div class="column story-text">
+    <textarea id="storyText"></textarea>
   </div>
 </body>
 
@@ -80,12 +110,12 @@
   }
   // functions for timeout.
   function deleteText() {
-    document.getElementById("textinput").value = "";
+    document.getElementById("storyText").value = "";
   }
   function makeTextReadonly() {
-    const textinput = document.getElementById("textinput");
-    textinput.setAttribute("readonly", "true");
-    textinput.setAttribute("style", "height: 75vh; width: 65vw; background: transparent;");
+    const storyText = document.getElementById("storyText");
+    storyText.setAttribute("readonly", "true");
+    storyText.setAttribute("style", "background: transparent;");
   }
 
   document.addEventListener("keydown", processWord);
@@ -97,13 +127,13 @@
   }
   function checkTargetWord(e) {
     // check if target word was used.
-    const inputWords = document.getElementById("textinput").value.trim().split(/\s+/);
+    const inputWords = document.getElementById("storyText").value.trim().split(/\s+/);
     const lastWord = inputWords[inputWords.length - 1];
-    const targetWord = document.getElementById("randw").innerHTML;
+    const targetWord = document.getElementById("targetWord").innerHTML;
     if (normString(lastWord) === normString(targetWord)) {
-      document.getElementById("randw").innerHTML = getRandomWord();
-      const prevw = document.getElementById("prevw")
-      prevw.innerHTML = targetWord + "<br>" + prevw.innerHTML;
+      document.getElementById("targetWord").innerHTML = getRandomWord();
+      const prevWords = document.getElementById("prevWords")
+      prevWords.innerHTML = targetWord + "<br>" + prevWords.innerHTML;
     }
   }
 
@@ -128,13 +158,13 @@
     const i = Math.floor(Math.random() * words.length);
     return words[i];
   }
-  document.getElementById("randw").innerHTML = getRandomWord();
+  document.getElementById("targetWord").innerHTML = getRandomWord();
 
   function resetGame() {
     clearInterval(timerId);
-    const textinput = document.getElementById("textinput");
-    textinput.removeAttribute("readonly");
-    textinput.setAttribute("style", "height: 75vh; width: 65vw;");
+    const storyText = document.getElementById("storyText");
+    storyText.removeAttribute("readonly");
+    storyText.removeAttribute("style");
   }
 </script>
 
