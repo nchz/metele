@@ -10,13 +10,22 @@
 
     .column {
       float: left;
-      padding: 5vw 5vw;
-      height: 85vh;
+      padding: 3vw 3vw;
+      height: 80vh;
     }
 
     .random-words {
       width: 25%;
       background-color: #aaa;
+    }
+
+    .target-word {
+      background: #fff;
+    }
+
+    .prev-words-grid {
+      display: grid;
+      grid-template-columns: 11vw 11vw;
     }
 
     .story-text {
@@ -26,16 +35,26 @@
 
     textarea {
       height: 70vh;
-      width: 65vw;
+      width: 68vw;
     }
 
-    @media screen and (max-width: 600px) {
+    @media screen and (max-width: 1100px) {
+      .prev-words-grid {
+        grid-template-columns: auto;
+      }
+    }
+
+    @media screen and (max-width: 650px) {
       .column {
         width: 100%;
       }
 
       .random-words {
-        height: 12vh;
+        height: 6vh;
+      }
+
+      .prev-words-grid {
+        display: none;
       }
 
       .story-text {
@@ -43,12 +62,8 @@
       }
 
       textarea {
-        height: 65vh;
-        width: 85vw;
-      }
-
-      .prev-words {
-        display: none;
+        height: 68vh;
+        width: 90vw;
       }
     }
   </style>
@@ -62,8 +77,9 @@
     <button onclick="resetGame()" style="float: right;">Reiniciar</button>
   </p>
   <div class="column random-words">
-    <p id="targetWord" style="background: #fff" />
-    <p id="prevWords" class="prev-words" />
+    <div id="targetWord" class="target-word"></div>
+    <div id="prevWords" class="prev-words-grid">
+    </div>
   </div>
   <div class="column story-text">
     <textarea id="storyText"></textarea>
@@ -133,7 +149,7 @@
     if (normString(lastWord) === normString(targetWord)) {
       document.getElementById("targetWord").innerHTML = getRandomWord();
       const prevWords = document.getElementById("prevWords")
-      prevWords.innerHTML = targetWord + "<br>" + prevWords.innerHTML;
+      prevWords.innerHTML = "<div>" + targetWord + "</div>" + prevWords.innerHTML;
     }
   }
 
