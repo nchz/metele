@@ -122,12 +122,12 @@
 </head>
 
 <body>
-  <div class="footer">v0.5.0</div>
+  <div class="footer">v0.5.1</div>
   <div class="header">
     <img src="logo.png" class="logo" />
     <div style="float: right;">
       <p>
-        <input id="timeoutSeconds" type="number" value="10" style="width: 50px; text-align: right" /> segundos para pensar
+        <input id="timeoutSeconds" type="number" value="10" style="width: 50px;" /> segundos para pensar
       </p>
       <button onclick="resetGame()">Reiniciar</button>
       <button onclick="downloadStory()">Descargar</button>
@@ -186,10 +186,6 @@
     clearInterval(timerId);
     timerId = buildTimer();
   }
-  // functions for timeout.
-  function deleteText() {
-    document.getElementById("storyText").value = "";
-  }
   function makeTextReadonly() {
     const storyText = document.getElementById("storyText");
     storyText.setAttribute("readonly", "true");
@@ -208,11 +204,13 @@
     const inputWords = document.getElementById("storyText").value.trim().split(/\s+/);
     const lastWord = inputWords[inputWords.length - 1];
     const targetWord = document.getElementById("targetWord").innerHTML;
-    if (normString(lastWord) === normString(targetWord)) {
-      document.getElementById("randomImage").setAttribute("src", getRandomImage());
+    if (targetWord === ". . .") {
+      document.getElementById("targetWord").innerHTML = getRandomWord();
+    } else if (normString(lastWord) === normString(targetWord)) {
       document.getElementById("targetWord").innerHTML = getRandomWord();
       const prevWords = document.getElementById("prevWords")
       prevWords.innerHTML = "<div>" + targetWord + "</div>" + prevWords.innerHTML;
+      document.getElementById("randomImage").setAttribute("src", getRandomImage());
     }
   }
 
@@ -234,15 +232,19 @@
   }
   getImageList();
   function getRandomImage() {
-    const i = Math.floor(Math.random() * randomImageList.length);
-    return randomImageList[i];
+    if (randomImageList) {
+      const i = Math.floor(Math.random() * randomImageList.length);
+      return randomImageList[i];
+    } else {
+      return "";
+    }
   }
 
   var randomWordList;
   const urlWords = "https://raw.githubusercontent.com/mazyvan/most-common-spanish-words/master/most-common-spanish-words-v4.txt";
   function getWordList() {
     var r = new XMLHttpRequest();
-    r.open("GET", urlWords, false);
+    r.open("GET", urlWords, true);
     r.onreadystatechange = function () {
       if (r.readyState === 4) {
         if (r.status === 200 || r.status == 0) {
@@ -256,16 +258,26 @@
   }
   getWordList();
   function getRandomWord() {
-    const i = Math.floor(Math.random() * randomWordList.length);
-    return randomWordList[i];
+    if (randomWordList) {
+      const i = Math.floor(Math.random() * randomWordList.length);
+      return randomWordList[i];
+    } else {
+      return ". . .";
+    }
   }
   document.getElementById("targetWord").innerHTML = getRandomWord();
 
   function resetGame() {
     clearInterval(timerId);
+    // reset text.
     const storyText = document.getElementById("storyText");
+    storyText.value = "";
     storyText.removeAttribute("readonly");
     storyText.removeAttribute("style");
+    // reset random words.
+    document.getElementById("targetWord").innerHTML = ". . .";
+    document.getElementById("prevWords").innerHTML = "";
+    document.getElementById("randomImage").removeAttribute("src");
   }
 
   function downloadStory() {
