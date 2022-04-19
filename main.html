@@ -8,22 +8,29 @@
       box-sizing: border-box;
     }
 
+    .logo {
+      float: left;
+      height: 100%;
+    }
+
     .header {
       position: fixed;
       left: 0;
       width: 100vw;
+      padding: 15px 15px;
       top: 0;
       height: 15vh;
-      background: lightseagreen;
+      background: lemonchiffon;
     }
 
     .footer {
       position: fixed;
       left: 0;
       width: 100vw;
+      padding: 15px 15px;
       bottom: 0;
       height: 5vh;
-      background: lightseagreen;
+      background: lemonchiffon;
     }
 
     .main {
@@ -42,7 +49,7 @@
 
     .story-text {
       width: 70%;
-      background: lightgray;
+      background: lightgoldenrodyellow;
     }
 
     textarea {
@@ -52,7 +59,7 @@
 
     .random-words {
       width: 30%;
-      background: lightblue;
+      background: lightyellow;
     }
 
     .target-word {
@@ -102,15 +109,16 @@
 </head>
 
 <body>
-  <div class="footer">version 0.4.1</div>
+  <div class="footer">version 0.4.2</div>
   <div class="header">
-    <h2>Metele</h2>
-    Para ejercitar la creatividad y la escritura.
-    <p>
-      <input id="timeoutSeconds" type="number" value="10" style="width: 50px; text-align: right" /> segundos para pensar
-      <button onclick="resetGame()" style="float: right;">Reiniciar</button>
-      <button onclick="downloadStory()" style="float: right;">Descargar</button>
-    </p>
+    <img src="logo.png" class="logo" />
+    <div style="float: right;">
+      <p>
+        <input id="timeoutSeconds" type="number" value="10" style="width: 50px; text-align: right" /> segundos para pensar
+      </p>
+      <button onclick="resetGame()">Reiniciar</button>
+      <button onclick="downloadStory()">Descargar</button>
+    </div>
   </div>
   <div class="main">
     <div class="column random-words">
