@@ -180,19 +180,29 @@
   var timerId;
   function buildTimer() {
     const seconds = Number(document.getElementById("timeoutSeconds").value);
-    return setInterval(makeTextReadonly, 1000 * seconds);
+    return setInterval(endGame, 1000 * seconds);
   }
   function resetTimer() {
     clearInterval(timerId);
     timerId = buildTimer();
   }
-  function makeTextReadonly() {
+  function endGame() {
+    clearInterval(timerId);
     const storyText = document.getElementById("storyText");
     storyText.setAttribute("readonly", "true");
     storyText.setAttribute("style", "background: transparent;");
+    // count words.
+    const inputWords = storyText.value.trim().split(/\s+/);
+    const msg = `
+      ¡Se acabo el tiempo!
+
+      ${inputWords.length} palabras escritas.
+      ${storyText.value.trim().length} caracteres escritos.
+    `;
+    alert(msg);
   }
 
-  document.addEventListener("keydown", processWord);
+  document.getElementById("storyText").addEventListener("keydown", processWord);
   function processWord(e) {
     if (e.keyCode == 13 || e.keyCode == 32) {
       resetTimer();
