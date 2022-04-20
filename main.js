@@ -49,54 +49,18 @@ function checkTargetWord(e) {
 
 var randomImageList;
 const urlImages = "https://gist.githubusercontent.com/nchz/3fd8b2a8174c00891e61f28e392865f4/raw/a9638c0271a59578ba7d89d0ff09cabb49fdc2bb/gistfile1.txt";
-function getImageList() {
-  var r = new XMLHttpRequest();
-  r.open("GET", urlImages, true);
-  r.onreadystatechange = function () {
-    if (r.readyState === 4) {
-      if (r.status === 200 || r.status == 0) {
-        const text = r.responseText;
-        randomImageList = text.split("\n");
-        console.log(`Using ${randomImageList.length} images.`)
-      }
-    }
-  }
-  r.send(null);
-}
-getImageList();
+fetch(urlImages).then(r => r.text()).then(t => randomImageList = t.split("\n"));
 function getRandomImage() {
-  if (randomImageList) {
-    const i = Math.floor(Math.random() * randomImageList.length);
-    return randomImageList[i];
-  } else {
-    return "";
-  }
+  const i = Math.floor(Math.random() * randomImageList?.length);
+  return randomImageList?.slice(i, i + 1) || "";
 }
 
 var randomWordList;
 const urlWords = "https://raw.githubusercontent.com/mazyvan/most-common-spanish-words/master/most-common-spanish-words-v4.txt";
-function getWordList() {
-  var r = new XMLHttpRequest();
-  r.open("GET", urlWords, true);
-  r.onreadystatechange = function () {
-    if (r.readyState === 4) {
-      if (r.status === 200 || r.status == 0) {
-        const text = r.responseText;
-        randomWordList = text.split("\n").map(w => removePunctChars(w.trim())).filter(w => w.length > 3 && isWord(w));
-        console.log(`Using ${randomWordList.length} words.`)
-      }
-    }
-  }
-  r.send(null);
-}
-getWordList();
+fetch(urlWords).then(r => r.text()).then(t => randomWordList = t.split("\n").map(w => removePunctChars(w.trim())).filter(w => w.length > 3 && isWord(w)));
 function getRandomWord() {
-  if (randomWordList) {
-    const i = Math.floor(Math.random() * randomWordList.length);
-    return randomWordList[i];
-  } else {
-    return ". . .";
-  }
+  const i = Math.floor(Math.random() * randomWordList?.length);
+  return randomWordList?.slice(i, i + 1) || ". . .";
 }
 document.getElementById("targetWord").innerHTML = getRandomWord();
 
