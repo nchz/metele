@@ -1,12 +1,9 @@
 var globalTimer;
-var imageTimer;
 var wordTimer;
 function deleteTimers() {
   clearInterval(globalTimer);
-  clearInterval(imageTimer);
   clearInterval(wordTimer);
   globalTimer = undefined;
-  imageTimer = undefined;
   wordTimer = undefined;
 }
 
@@ -47,7 +44,7 @@ function startGame() {
   storyText.addEventListener("keydown", processWord);
 
   document.getElementById("targetWord").innerHTML = getRandomWord();
-  imageTimer = buildTimer(rotateRandomImage, 10);
+  rotateRandomImage();
 
   globalTimer = buildTimer(endGame, "globalTimeoutSecs");
 }
@@ -110,7 +107,7 @@ function resetText() {
 }
 
 function resetRandomWords() {
-  document.getElementById("targetWord").innerHTML = "";
+  document.getElementById("targetWord").innerHTML = ". . .";
   document.getElementById("prevWords").innerHTML = "";
   document.getElementById("randomImage").removeAttribute("src");
 }

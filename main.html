@@ -7,7 +7,7 @@
 </head>
 
 <body>
-  <div class="footer">v0.6.0</div>
+  <div class="footer">v0.6.1</div>
   <div class="header">
     <img src="logo.png" class="logo" />
     <div style="float: right;">
@@ -23,10 +23,10 @@
   </div>
   <div class="main">
     <div class="column random-words">
-      <div class="square">
+      <div class="square" onclick="rotateRandomImage()">
         <img id="randomImage" class="square-content" width="100%">
       </div>
-      <div id="targetWord" class="target-word"></div>
+      <div id="targetWord" class="target-word">. . .</div>
       <div id="prevWords" class="prev-words-grid">
       </div>
     </div>
